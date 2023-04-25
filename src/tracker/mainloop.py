@@ -17,7 +17,6 @@ class MainLoop:
     def execute(self):
         print("MainLoop execute")
         sequence = self.capturer.capture()
-        # check if we know the bird
         match = self.predictor.predict(sequence)
 
         if isinstance(match, Match):
@@ -28,7 +27,6 @@ class MainLoop:
             return
 
         self.sequence_splitter.splitSequenceToImages(sequence)
+        # store the data into a db
+        # send notification @given time if there are new events
         print("No match found")
-        # wenn es keinen match gibt, sequence/bilder für späteres training speichern
-        # counter in der DB erhöhen
-        # Von Zeit zu Zeit notification senden, dass es bilder fürs training gibt

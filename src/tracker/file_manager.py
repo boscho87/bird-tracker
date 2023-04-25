@@ -12,5 +12,10 @@ class FileManager:
 
     def create_recording_path(self, subfolder=''):
         if subfolder:
-            return './recordings/' + f'{subfolder}'
-        return './recordings'
+            return './data/recordings/' + f'{subfolder}'
+        return './data/recordings'
+
+    def create_untrained_path(self, subfolder=''):
+        if subfolder:
+            return './data/untrained/' + f'{subfolder}'
+        return './data/untrained'
