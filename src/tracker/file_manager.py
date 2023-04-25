@@ -10,5 +10,7 @@ class FileManager:
         image_path = tempfile.gettempdir()
         return image_path + "/video_" + str(int(time.time())) + ".mp4"
 
-    def create_recording_path(self):
+    def create_recording_path(self, subfolder=''):
+        if subfolder:
+            return './recordings/' + f'{subfolder}'
         return './recordings'
