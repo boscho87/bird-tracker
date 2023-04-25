@@ -1,11 +1,11 @@
 #Files
 *.pyc
 *.pyo
-
+*.jpg
+*.mp4
 #DIRS
 data/**/
 .idea/
 
-
-# Force Incl
+#Force Incl
 data/**/.gitkeep
