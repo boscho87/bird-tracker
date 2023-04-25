@@ -1,0 +1,11 @@
+#Files
+*.pyc
+*.pyo
+
+#DIRS
+data/**/
+.idea/
+
+
+# Force Incl
+data/**/.gitkeep
