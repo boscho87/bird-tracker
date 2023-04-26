@@ -1,8 +1,9 @@
 import time
-
+import cv2
+from src.tracker.settings import Settings
 from src.tracker.file_manager import FileManager
 from src.tracker.entity.sequence import Sequence
-import cv2
+
 
 
 class Capturer:
@@ -11,11 +12,17 @@ class Capturer:
     image_width: int
     cap: cv2.VideoCapture
 
-    def __init__(self, image_width=640, image_height=480):
+    def __init__(self):
         self.file_manager = FileManager()
-        self.image_height = image_height
-        self.image_width = image_width
-        self.cap = cv2.VideoCapture(0)
+        self.image_height = Settings.get_image_height()
+        self.image_width = Settings.get_image_width()
+        print("Capturer init")
+        try:
+            print("Cam-ID:", Settings.get_camera_id())
+            self.cap = cv2.VideoCapture(Settings.get_camera_id(), cv2.CAP_DSHOW)
+        except Exception as e:
+            print("Error: Webcam could not be opened")
+            print(e)
 
     def capture(self) -> Sequence:
         print("Capturer capture")

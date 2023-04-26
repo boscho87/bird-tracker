@@ -3,6 +3,7 @@
 *.pyo
 *.jpg
 *.mp4
+.env
 #DIRS
 data/**/
 .idea/
