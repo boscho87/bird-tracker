@@ -1,5 +1,6 @@
 from src.tracker.capturer import Capturer
 from src.tracker.entity.match import Match
+from src.tracker.file_manager import FileManager
 from src.tracker.predictor import Predictor
 from src.tracker.sequencesplitter import SequenceSplitter
 
@@ -13,6 +14,7 @@ class MainLoop:
         self.predictor = Predictor()
         self.capturer = Capturer()
         self.sequence_splitter = SequenceSplitter()
+        self.file_manager = FileManager()
 
     def execute(self):
         print("MainLoop execute")
@@ -26,7 +28,7 @@ class MainLoop:
             print("Match found")
             return
 
-        self.sequence_splitter.splitSequenceToImages(sequence)
+        self.sequence_splitter.splitSequenceToImages(sequence, self.file_manager.create_untrained_path())
         # store the data into a db
         # send notification @given time if there are new events
         print("No match found")

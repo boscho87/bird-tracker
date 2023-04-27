@@ -10,8 +10,8 @@ class SequenceSplitter:
     def __init__(self):
         self.file_manager = FileManager()
 
-    def splitSequenceToImages(self, sequence: Sequence):
-        output_path = self.file_manager.create_untrained_path(sequence.get_time())
+    def splitSequenceToImages(self, sequence: Sequence, output_path: str):
+        output_path = output_path
         try:
             cap = cv2.VideoCapture(sequence.get_file_path())
             while cap.isOpened():

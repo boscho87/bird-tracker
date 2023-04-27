@@ -4,6 +4,7 @@ import time
 
 class FileManager:
     def __init__(self):
+        #Todo move the the path to the constructor
         print("ImageManager init")
 
     def create_video_temp_path(self):
