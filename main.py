@@ -1,4 +1,4 @@
-from src.tracker.mainloop import MainLoop
+from src.tracker.services.mainloop import MainLoop
 
 
 def main():

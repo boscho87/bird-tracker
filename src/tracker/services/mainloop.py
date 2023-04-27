@@ -1,8 +1,8 @@
-from src.tracker.capturer import Capturer
+from src.tracker.services.capturer import Capturer
 from src.tracker.entity.match import Match
-from src.tracker.file_manager import FileManager
-from src.tracker.predictor import Predictor
-from src.tracker.sequencesplitter import SequenceSplitter
+from src.tracker.services.file_manager import FileManager
+from src.tracker.services.predictor import Predictor
+from src.tracker.services.sequencesplitter import SequenceSplitter
 
 
 class MainLoop:

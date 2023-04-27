@@ -1,7 +1,7 @@
 import time
 import cv2
-from src.tracker.settings import Settings
-from src.tracker.file_manager import FileManager
+from src.tracker.services.settings import Settings
+from src.tracker.services.file_manager import FileManager
 from src.tracker.entity.sequence import Sequence
 
 

@@ -1,6 +1,6 @@
 from src.tracker.entity.sequence import Sequence
-from src.tracker.file_manager import FileManager
-from src.tracker.sequencesplitter import SequenceSplitter
+from src.tracker.services.file_manager import FileManager
+from src.tracker.services.sequencesplitter import SequenceSplitter
 
 
 class Predictor:

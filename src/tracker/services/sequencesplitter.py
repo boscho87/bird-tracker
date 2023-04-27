@@ -1,7 +1,7 @@
 import os
 import cv2
 from src.tracker.entity.sequence import Sequence
-from src.tracker.file_manager import FileManager
+from src.tracker.services.file_manager import FileManager
 
 
 class SequenceSplitter:
