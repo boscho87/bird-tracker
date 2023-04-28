@@ -1,17 +1,20 @@
 import os
 import cv2
+
+from src.tracker.entity.image import Image
 from src.tracker.entity.sequence import Sequence
-from src.tracker.services.file_manager import FileManager
+from src.tracker.services.path_manager import PathManager
 
 
 class SequenceSplitter:
-    file_manager: FileManager
+    path_manager: PathManager
 
     def __init__(self):
-        self.file_manager = FileManager()
+        self.path_manager = PathManager()
 
-    def splitSequenceToImages(self, sequence: Sequence, output_path: str):
-        output_path = output_path
+    def split_sequence_to_images(self, sequence: Sequence):
+        output_path = self.path_manager.create_image_temp_path()
+        images = []
         try:
             cap = cv2.VideoCapture(sequence.get_file_path())
             while cap.isOpened():
@@ -22,8 +25,13 @@ class SequenceSplitter:
                     path, dirs, files = next(os.walk(output_path))
                     file_count = len(files)
                     filepath = os.path.join(output_path, f'{file_count + 1}.jpg')
+                    print(filepath)
                     cv2.imwrite(filepath, frame)
+                    image = Image(filepath)
+                    images.append(image)
                 else:
                     break
         except:
-            pass
+            print("Error while splitting sequence to images")
+
+        return images

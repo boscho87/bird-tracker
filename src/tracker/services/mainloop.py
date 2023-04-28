@@ -1,6 +1,9 @@
+import os
+import shutil
+
 from src.tracker.services.capturer import Capturer
 from src.tracker.entity.match import Match
-from src.tracker.services.file_manager import FileManager
+from src.tracker.services.path_manager import PathManager
 from src.tracker.services.predictor import Predictor
 from src.tracker.services.sequencesplitter import SequenceSplitter
 
@@ -14,7 +17,7 @@ class MainLoop:
         self.predictor = Predictor()
         self.capturer = Capturer()
         self.sequence_splitter = SequenceSplitter()
-        self.file_manager = FileManager()
+        self.path_manager = PathManager()
 
     def execute(self):
         print("MainLoop execute")
@@ -28,7 +31,14 @@ class MainLoop:
             print("Match found")
             return
 
-        self.sequence_splitter.splitSequenceToImages(sequence, self.file_manager.create_untrained_path())
+        # store the sequence mp4
+        images = sequence.get_images()
+        for image in images:
+            save_path = self.path_manager.create_untrained_path()
+            target_path = os.path.join(save_path, image.get_file_name()) #todo move this
+            os.makedirs(target_path)
+            shutil.move(image.get_file_path(), target_path)
+
         # store the data into a db
         # send notification @given time if there are new events
         print("No match found")
