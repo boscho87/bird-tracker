@@ -18,3 +18,7 @@ class Settings:
     @staticmethod
     def get_image_height():
         return int(os.getenv('IMAGE_HEIGHT')) if os.getenv('IMAGE_HEIGHT') not in [None, ''] else 480
+
+    @staticmethod
+    def frames_per_shot():
+        return int(os.getenv('FRAMES_PER_SHOT')) if os.getenv('FRAMES_PER_SHOT') not in [None, ''] else 60

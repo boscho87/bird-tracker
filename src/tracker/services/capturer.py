@@ -1,19 +1,19 @@
 import time
 import cv2
 from src.tracker.services.settings import Settings
-from src.tracker.services.file_manager import FileManager
+from src.tracker.services.path_manager import PathManager
 from src.tracker.entity.sequence import Sequence
 
 
 
 class Capturer:
-    file_manager: FileManager
+    path_manager: PathManager
     image_height: int
     image_width: int
     cap: cv2.VideoCapture
 
     def __init__(self):
-        self.file_manager = FileManager()
+        self.path_manager = PathManager()
         self.image_height = Settings.get_image_height()
         self.image_width = Settings.get_image_width()
         print("Capturer init")
@@ -26,13 +26,13 @@ class Capturer:
 
     def capture(self) -> Sequence:
         print("Capturer capture")
-        filename = self.file_manager.create_video_temp_path()
+        filename = self.path_manager.create_video_temp_path()
         fourcc = cv2.VideoWriter_fourcc(*"mp4v")
         self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, self.image_width)
         self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, self.image_height)
         out = cv2.VideoWriter(filename, fourcc, 20.0, (self.image_width, self.image_height))
-        # 60 Frames = 3 seconds on 20 fps Todo relolve magic number
-        for i in range(60):
+        # 60 Frames = 3 seconds on 20 fps Todo resolve magic number
+        for i in range(Settings.frames_per_shot()):
             ret, frame = self.cap.read()
             if not ret:
                 print("Error: Webcam could not capture frame")
