@@ -22,3 +22,7 @@ class Settings:
     @staticmethod
     def frames_per_shot():
         return int(os.getenv('FRAMES_PER_SHOT')) if os.getenv('FRAMES_PER_SHOT') not in [None, ''] else 60
+
+    @staticmethod
+    def get_prediction_threshold():
+        return int(os.getenv('PREDICTION_THRESHOLD')) if os.getenv('PREDICTION_THRESHOLD') not in [None, ''] else 85

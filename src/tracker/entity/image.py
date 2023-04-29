@@ -1,3 +1,6 @@
+import os
+
+
 class Image:
     filepath: str
 
@@ -8,4 +11,7 @@ class Image:
         return self.filepath
 
     def get_file_name(self):
-        return self.get_file_path().split('/')[-1]
+        return os.path.basename(self.filepath)
+
+
+

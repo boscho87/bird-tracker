@@ -8,7 +8,7 @@ class Sequence:
         self.file_path = file_path
         print("Sequence init")
 
-    def get_file_path(self): #Todo remove this, because the images has the conrete path
+    def get_file_path(self):
         return self.file_path
 
     def get_time(self):

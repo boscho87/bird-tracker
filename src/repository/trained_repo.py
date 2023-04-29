@@ -23,5 +23,5 @@ class TrainedRepo:
                     image = Image(image_path)
                     output_files.append(image)
         #Todo extract images in groups of subjects
-        print(output_files)
+
         return output_files

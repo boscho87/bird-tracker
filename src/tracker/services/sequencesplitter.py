@@ -25,7 +25,6 @@ class SequenceSplitter:
                     path, dirs, files = next(os.walk(output_path))
                     file_count = len(files)
                     filepath = os.path.join(output_path, f'{file_count + 1}.jpg')
-                    print(filepath)
                     cv2.imwrite(filepath, frame)
                     image = Image(filepath)
                     images.append(image)

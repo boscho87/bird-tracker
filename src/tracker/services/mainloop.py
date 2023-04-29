@@ -34,10 +34,12 @@ class MainLoop:
         # store the sequence mp4
         images = sequence.get_images()
         for image in images:
-            save_path = self.path_manager.create_untrained_path()
-            target_path = os.path.join(save_path, image.get_file_name()) #todo move this
-            os.makedirs(target_path)
-            shutil.move(image.get_file_path(), target_path)
+            # Todo extract the path stuff to a service
+            save_path = os.path.join(self.path_manager.create_untrained_path(), str(sequence.get_time()))
+            file_name = str(sequence.get_time()) + "-" + image.get_file_name()
+            target_path = os.path.join(save_path, file_name)
+            os.makedirs(save_path, exist_ok=True)
+            shutil.copy(image.get_file_path(), target_path)
 
         # store the data into a db
         # send notification @given time if there are new events

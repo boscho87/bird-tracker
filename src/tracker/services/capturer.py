@@ -5,7 +5,6 @@ from src.tracker.services.path_manager import PathManager
 from src.tracker.entity.sequence import Sequence
 
 
-
 class Capturer:
     path_manager: PathManager
     image_height: int
@@ -41,4 +40,4 @@ class Capturer:
         out.release()
         self.cap.release()
         cv2.destroyAllWindows()
-        return Sequence(filename, time.time())
+        return Sequence(filename, int(time.time_ns() / 1000000000))
