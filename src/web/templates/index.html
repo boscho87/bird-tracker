@@ -1,8 +1,39 @@
-<!DOCTYPE>
+<!DOCTYPE html>
 <html>
 <head>
-    <title>My First Web Page</title>
+    <title>Image Gallery</title>
+</head>
 <body>
+<h1>Nicht erkannte Bilder</h1>
 
+
+<div class="image-gallery">
+    <img src="{{ url_for('video_feed') }}" width="640" height="480">
+    {% for file in files %}
+    <img src="{{ url_for('untrained_images', file_path=file) }}" alt="Image" width="80px">
+    {% endfor %}
+</div>
+
+
+<footer>
+    <nav>
+        <ul>
+            <li>
+                <a href="{{ url_for('index') }}">Live</a>
+                <a href="{{ url_for('index') }}">Live</a>
+            </li>
+        </ul>
+    </nav>
+</footer>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Quicksand:wght@300;400&display=swap');
+     h1,h2,h3,h4,h5,h6,a{
+     font-family: 'Quicksand', sans-serif;
+     }
+     p,ul,li{
+       font-family: 'Playfair Display', serif;
+     }
+
+</style>
 </body>
 </html>

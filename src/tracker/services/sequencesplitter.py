@@ -16,7 +16,7 @@ class SequenceSplitter:
         output_path = self.path_manager.create_image_temp_path()
         images = []
         try:
-            cap = cv2.VideoCapture(sequence.get_file_path())
+            cap = cv2.VideoCapture(sequence.get_video_path())
             while cap.isOpened():
                 ret, frame = cap.read()
                 if ret == True:

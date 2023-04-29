@@ -25,4 +25,4 @@ class Settings:
 
     @staticmethod
     def get_prediction_threshold():
-        return int(os.getenv('PREDICTION_THRESHOLD')) if os.getenv('PREDICTION_THRESHOLD') not in [None, ''] else 85
+        return int(os.getenv('PREDICTION_THRESHOLD')) if os.getenv('PREDICTION_THRESHOLD') not in [None, ''] else 75

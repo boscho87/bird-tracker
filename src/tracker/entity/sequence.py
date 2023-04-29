@@ -2,13 +2,15 @@ from src.tracker.entity.image import Image
 
 
 class Sequence:
-    def __init__(self, file_path: str, time: int):
-        self.images = []
+    def __init__(self, video_path: str, time: int, images=None):
+        if images is None:
+            images = []
+        self.images = images
         self.time = time
-        self.file_path = file_path
+        self.file_path = video_path
         print("Sequence init")
 
-    def get_file_path(self):
+    def get_video_path(self):
         return self.file_path
 
     def get_time(self):

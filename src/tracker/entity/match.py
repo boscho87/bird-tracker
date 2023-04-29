@@ -11,3 +11,6 @@ class Match:
         self.sequence = sequence
         self.species_name = species_name
         self.species_id = species_id
+
+    def get_sequence(self):
+        return self.sequence

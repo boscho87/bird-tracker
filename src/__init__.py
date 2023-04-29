@@ -1,4 +1,6 @@
 from .repository.trained_repo import TrainedRepo
+from .repository.untrained_repo import UntrainedRepo
+from .tracker.entity.image import Image
 from .tracker.entity.match import Match
 from .tracker.entity.sequence import Sequence
 from src.tracker.services.sequencesplitter import SequenceSplitter
@@ -17,6 +19,8 @@ __all__ = [
     "PathManager",
     "SequenceSplitter",
     "Settings",
-    "TrainedRepo"
+    "TrainedRepo",
+    "UntrainedRepo",
+    "Image"
 ]
 
