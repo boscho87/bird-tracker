@@ -12,6 +12,3 @@ class Image:
 
     def get_file_name(self):
         return os.path.basename(self.filepath)
-
-
-

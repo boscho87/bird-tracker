@@ -2,7 +2,7 @@ from src.tracker.entity.image import Image
 
 
 class Sequence:
-    def __init__(self, video_path: str, time: int, images=None):
+    def __init__(self, video_path: str = None, time: int = 0, images=None):
         if images is None:
             images = []
         self.images = images
@@ -18,8 +18,12 @@ class Sequence:
 
     def set_images(self, images):
         for image in images:
-            isinstance(image, Image)
-            self.images.append(image)
+            if isinstance(image, Image):
+                self.images.append(image)
 
     def get_images(self):
         return self.images
+
+    def add_image(self, image):
+        if isinstance(image, Image):
+            self.images.append(image)

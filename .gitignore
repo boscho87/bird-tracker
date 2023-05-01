@@ -9,6 +9,6 @@
 data/**/
 .idea/
 bird_tracker.egg-info
-
+build
 #Force Incl
 data/**/.gitkeep

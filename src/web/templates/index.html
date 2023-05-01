@@ -9,6 +9,7 @@
 
 <div class="image-gallery">
     <img src="{{ url_for('video_feed') }}" width="640" height="480">
+    <h3>Bilder</h3>
     {% for file in files %}
     <img src="{{ url_for('untrained_images', file_path=file) }}" alt="Image" width="80px">
     {% endfor %}

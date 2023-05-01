@@ -10,7 +10,6 @@ def initialize_database():
     database.create_tables([Subject, Event])
 
 
-
 setup(
     name='bird-tracker',
     version='0.0.1',
@@ -23,4 +22,5 @@ setup(
     description='Bird-Tracker - Birdly DIY Project',
 )
 
-initialize_database()
+if __name__ == '__main__':
+    initialize_database()
