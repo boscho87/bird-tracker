@@ -17,12 +17,13 @@ class TrainedRepo:
         print(subjects)
         for subject in subjects:
             subject_path = os.path.join(directory, subject)
-            subject_images = os.listdir(subject_path)
-            for subject_image in subject_images:
-                if subject_image.endswith(".jpg"):
-                    image_path = os.path.join(subject_path, subject_image)
-                    image = Image(image_path)
-                    output_files.append(image)
+            if os.path.isdir(subject_path):
+                subject_images = os.listdir(subject_path)
+                for subject_image in subject_images:
+                    if subject_image.endswith(".jpg"):
+                        image_path = os.path.join(subject_path, subject_image)
+                        image = Image(image_path)
+                        output_files.append(image)
         # Todo extract images in groups of subjects
 
         return output_files

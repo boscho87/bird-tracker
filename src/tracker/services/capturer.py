@@ -15,6 +15,7 @@ class Capturer:
     sequence_splitter: SequenceSplitter
 
     def __init__(self):
+        self.retired = None
         self.path_manager = PathManager()
         self.image_height = Settings.get_image_height()
         self.image_width = Settings.get_image_width()
@@ -22,7 +23,12 @@ class Capturer:
         print("Capturer init")
         try:
             print("Cam-ID:", Settings.get_camera_id())
-            self.cap = cv2.VideoCapture(Settings.get_camera_id(), cv2.CAP_DSHOW)
+            if Settings.use_cap_dshow():
+                print("Using CAP_DSHOW")
+                self.cap = cv2.VideoCapture(Settings.get_camera_id(), cv2.CAP_DSHOW)
+            else:
+                print("Using default")
+                self.cap = cv2.VideoCapture(Settings.get_camera_id())
         except Exception as e:
             print("Error: Webcam could not be opened")
             print(e)

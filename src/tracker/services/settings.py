@@ -26,3 +26,12 @@ class Settings:
     @staticmethod
     def get_prediction_threshold():
         return int(os.getenv('PREDICTION_THRESHOLD')) if os.getenv('PREDICTION_THRESHOLD') not in [None, ''] else 75
+
+    @staticmethod
+    def use_cap_dshow():
+        use_cap_dshow = os.getenv('USE_CAP_DSHOW')
+        return bool(int(use_cap_dshow)) if use_cap_dshow not in [None, ''] else False
+
+    @staticmethod
+    def get_db_file_path():
+        return os.getenv('DB_FILE_PATH') if os.getenv('DB_FILE_PATH') not in [None, ''] else 'sqlite.db'

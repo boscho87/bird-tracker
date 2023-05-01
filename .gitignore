@@ -4,6 +4,7 @@
 *.jpg
 *.mp4
 .env
+*.db
 #DIRS
 data/**/
 .idea/

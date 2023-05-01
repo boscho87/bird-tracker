@@ -18,6 +18,7 @@ class Predictor:
         print("Predictor predict")
         current_images = sequence.get_images()
         trained_images = self.trained_repo.get_trained_images()
+        #Todo get trained images with species id and name
         for sequence_image in current_images:
             sequence_image_array = cv2.imread(sequence_image.get_file_path())
             for trained_image in trained_images:

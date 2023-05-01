@@ -1,0 +1,9 @@
+Metadata-Version: 2.1
+Name: bird-tracker
+Version: 0.0.1
+Summary: Bird-Tracker - Birdly DIY Project
+Home-page: https://github.com/boscho87/bird-tracker
+Author: boscho87
+Author-email: simon.d.mueller@gmail.com
+License: MIT
+Requires: requirements.txt

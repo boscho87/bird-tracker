@@ -1,0 +1,7 @@
+setup.py
+bird_tracker.egg-info/PKG-INFO
+bird_tracker.egg-info/SOURCES.txt
+bird_tracker.egg-info/dependency_links.txt
+bird_tracker.egg-info/top_level.txt
+src/__init__.py
+src/functions.py
