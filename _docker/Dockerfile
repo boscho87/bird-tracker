@@ -9,14 +9,10 @@ WORKDIR /app
 
 # Copy source code
 COPY . /app
-COPY _docker/entrypoint.sh /usr/bin/entrypoint.sh
-RUN chmod ug+x /usr/bin/entrypoint.sh
-
+COPY .env.default /app/.env.default
 # Install dependencies
 RUN pip install -r requirements.txt
-
 RUN rm -rf _docker _doc docker-compose.yaml CHANGELOG.md README.md requirements.txt .gitignore .git
-
-#ARG USER_ID=1000
-#RUN usermod -u ${USER_ID} www-data
+ARG DB_FILE_PATH=/app/data/db.sqlite
+RUN python setup.py install
 CMD python /app/src/web/page.py & python /app/main.py

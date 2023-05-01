@@ -6,10 +6,11 @@
 .env
 *.db
 #DIRS
-data/**/
+/data/recordings/
+/data/training/
+/data/untrained/
 .idea/
 bird_tracker.egg-info
 build
 #Force Incl
-data/**/.gitkeep
 !data/**/.gitkeep
