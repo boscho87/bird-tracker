@@ -8,6 +8,7 @@
 #DIRS
 data/**/
 .idea/
+bird_tracker.egg-info
 
 #Force Incl
 data/**/.gitkeep
