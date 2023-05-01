@@ -1,3 +1,4 @@
 set -e
 
-exec python src/web/page.py
+python setup.py install
+python src/web/page.py &
