@@ -8,15 +8,15 @@ RUN apt-get update && apt-get install -y libgl1-mesa-glx \
 WORKDIR /app
 
 # Copy source code
-COPY _docker /app
-COPY entrypoint.sh /usr/bin/entrypoint.sh
+COPY . /app
+COPY _docker/entrypoint.sh /usr/bin/entrypoint.sh
 RUN chmod ug+x /usr/bin/entrypoint.sh
 
 # Install dependencies
 RUN pip install -r requirements.txt
 
-# Run setup.py
-RUN python setup.py install
+RUN rm -rf _docker _doc docker-compose.yaml CHANGELOG.md README.md requirements.txt .gitignore .git
 
-ENTRYPOINT [ "entrypoint.sh" ]
-CMD [ "python", "main.py" ]
+#ARG USER_ID=1000
+#RUN usermod -u ${USER_ID} www-data
+CMD python /app/src/web/page.py & python /app/main.py
