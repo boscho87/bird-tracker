@@ -1,0 +1,25 @@
+# Ignore all files and directories in the .git directory
+.git
+
+# Ignore virtual environments and installed Python packages
+venv/
+lib/
+include/
+
+# Ignore Python intermediate files
+*.pyc
+*.pyo
+__pycache__/
+
+# Ignore development environment configuration
+.vscode/
+.idea/
+
+# Ignore files and directories not needed during the build
+.DS_Store
+*.log
+*.sqlite
+
+# Ignore other files or directories as needed
+bird_tracker.egg-info
+build

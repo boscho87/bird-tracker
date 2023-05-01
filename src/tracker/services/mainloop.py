@@ -28,11 +28,6 @@ class MainLoop:
         sequence = self.capturer.capture()
         match = self.predictor.predict(sequence)
 
-        events = Event.select()
-        print("Looping through events")
-        for event in events:
-            print(event.known)
-
         event = Event.create(time=sequence.get_time())
 
         if isinstance(match, Match):

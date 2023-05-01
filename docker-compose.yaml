@@ -1,0 +1,10 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: _docker/Dockerfile
+    volumes:
+      - ./data:/app/data
+    devices:
+      - /dev/video0:/dev/video0

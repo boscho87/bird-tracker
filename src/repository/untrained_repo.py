@@ -25,3 +25,15 @@ class UntrainedRepo:
         images = sequence.get_images()
         for image in images:
             self.store_image(image, str(sequence.get_time()))
+
+    def get_sequence(self, timestamp):
+        # Todo implement
+        return None
+
+    def get_sequences(self):
+        # Todo retrun all untrained sequences (limit by eg. 20)
+        return None
+
+    def remove_sequence(self, timestamp):
+        # Todo implement
+        return None

@@ -2,6 +2,7 @@ import tempfile
 import time
 import os
 
+
 class PathManager:
     def __init__(self):
         print("ImageManager init")
@@ -24,6 +25,7 @@ class PathManager:
         image_path = tempfile.gettempdir()
         return os.path.abspath(image_path + "/image/" + str(int(time.time())))
 
-    def get_trained_path(self):
-        print(os.path.abspath('./data/trained'))
+    def get_trained_path(self, subfolder=''):
+        if subfolder:
+            return os.path.abspath('./data/trained/' + f'{subfolder}')
         return os.path.abspath('./data/trained')

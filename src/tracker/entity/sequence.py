@@ -2,7 +2,7 @@ from src.tracker.entity.image import Image
 
 
 class Sequence:
-    def __init__(self, video_path: str, time: int, images=None):
+    def __init__(self, video_path: str = None, time: int = 0, images=None):
         if images is None:
             images = []
         self.images = images
