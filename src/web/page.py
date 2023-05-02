@@ -30,11 +30,16 @@ def untrained():
     return jsonify(captures)
 
 
-@app.route('/video_feed')
+@app.route('/video-feed')
 def video_feed():
     capturer = Capturer()
     return Response(capturer.generate_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
-if __name__ == '__main__':
-    app.run()
+class Page:
+    def __init__(self):
+        print("Page init")
+
+    def run(self):
+        print("Page run")
+        app.run(host='0.0.0.0')

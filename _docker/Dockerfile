@@ -10,9 +10,9 @@ WORKDIR /app
 # Copy source code
 COPY . /app
 COPY .env.default /app/.env.default
-# Install dependencies
+COPY _docker/start.sh /usr/bin/start.sh
+
 RUN pip install -r requirements.txt
 RUN rm -rf _docker _doc docker-compose.yaml CHANGELOG.md README.md requirements.txt .gitignore .git
-ARG DB_FILE_PATH=/app/data/db.sqlite
-RUN python setup.py install
-CMD python /app/src/web/page.py & python /app/main.py
+RUN chmod +x /usr/bin/start.sh
+CMD ["/usr/bin/start.sh"]

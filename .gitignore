@@ -7,10 +7,11 @@
 *.db
 #DIRS
 /data/recordings/
-/data/training/
+/data/trained/
 /data/untrained/
 .idea/
 bird_tracker.egg-info
 build
 #Force Incl
-!data/**/.gitkeep
+!/data/**/.gitkeep
+*.sqlite

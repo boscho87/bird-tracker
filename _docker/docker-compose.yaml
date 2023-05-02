@@ -1,11 +1,16 @@
-version: '3'
+version: '3.5'
 services:
   app:
     container_name: bird-tracker
     image: 'boscho87/bird-tracker:latest'
+    ports:
+      - '5000:5000'
     volumes:
       - ./data:/app/data
-    environment:
-      - DB_FILE_PATH="/app/data/bird-tracker.db"
     devices:
       - /dev/video0:/dev/video0
+      - /dev/gpiomem:/dev/gpiomem
+
+networks:
+  default:
+    name: bird-tracker

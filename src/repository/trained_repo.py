@@ -36,7 +36,6 @@ class TrainedRepo:
 
     def store_image(self, image: Image, image_path):
         target_path = os.path.join(image_path, image.get_file_name())
-        os.makedirs(image_path, exist_ok=True)
         shutil.copy(image.get_file_path(), target_path)
 
     def store_sequence(self, sequence, name):

@@ -1,12 +1,19 @@
 version: '3'
 services:
-  app:
+  bird-tracker-dev:
+    stdin_open: true
+    tty: true
+    container_name: bird-tracker-dev
+    ports:
+      - "5000:5000"
     build:
       context: .
       dockerfile: _docker/Dockerfile
     volumes:
-      - ./data:/app/data
-    environment:
-      - DB_FILE_PATH="/app/data/bird-tracker.db"
+      - ./:/app/
     devices:
       - /dev/video0:/dev/video0
+
+networks:
+  default:
+    name: bird-tracker-dev

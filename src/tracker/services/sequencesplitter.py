@@ -20,8 +20,6 @@ class SequenceSplitter:
             while cap.isOpened():
                 ret, frame = cap.read()
                 if ret == True:
-                    if not os.path.exists(output_path):
-                        os.makedirs(output_path)
                     path, dirs, files = next(os.walk(output_path))
                     file_count = len(files)
                     filepath = os.path.join(output_path, f'{file_count + 1}.jpg')

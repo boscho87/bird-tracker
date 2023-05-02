@@ -17,7 +17,6 @@ class UntrainedRepo:
         save_path = os.path.join(self.path_manager.create_untrained_path(), prefix)
         file_name = prefix + "-" + image.get_file_name()
         target_path = os.path.join(save_path, file_name)
-        os.makedirs(save_path, exist_ok=True)
         shutil.copy(image.get_file_path(), target_path)
 
     def store_sequence(self, sequence: Sequence):
