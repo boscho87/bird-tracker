@@ -5,6 +5,7 @@
 venv/
 lib/
 include/
+_doc
 
 # Ignore Python intermediate files
 *.pyc
@@ -19,7 +20,7 @@ __pycache__/
 .DS_Store
 *.log
 *.sqlite
+docker-compose.yaml
 
 # Ignore other files or directories as needed
 bird_tracker.egg-info
-build

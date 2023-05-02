@@ -13,7 +13,6 @@ def find_camera_id():
             return
     print("NO CAMS FOUND")
 
-find_camera_id()
 
 
 ## todo comment in english

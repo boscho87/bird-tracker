@@ -34,4 +34,4 @@ class Settings:
 
     @staticmethod
     def get_db_file_path():
-        return os.getenv('DB_FILE_PATH') if os.getenv('DB_FILE_PATH') not in [None, ''] else 'sqlite.db'
+        return os.getenv('DB_FILE_PATH') if os.getenv('DB_FILE_PATH') not in [None, ''] else 'data/db.sqlite'

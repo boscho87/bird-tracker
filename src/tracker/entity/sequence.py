@@ -18,8 +18,12 @@ class Sequence:
 
     def set_images(self, images):
         for image in images:
-            isinstance(image, Image)
-            self.images.append(image)
+            if isinstance(image, Image):
+                self.images.append(image)
 
     def get_images(self):
         return self.images
+
+    def add_image(self, image):
+        if isinstance(image, Image):
+            self.images.append(image)

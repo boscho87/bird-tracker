@@ -1,30 +1,33 @@
 import os
 
-from flask import Flask, render_template, send_from_directory, Response
+from flask import Flask, render_template, send_from_directory, Response, jsonify
 
+from src.repository.untrained_repo import UntrainedRepo
 from src.tracker.services.capturer import Capturer
+from src.tracker.services.path_manager import PathManager
 
 app = Flask(__name__)
 
 
 @app.route('/images/<path:file_path>')
 def untrained_images(file_path):
-    untrained_dirs = "../../data/untrained"
-    return send_from_directory(untrained_dirs, file_path)
+    path_manager = PathManager()
+    untrained_dir = path_manager.create_untrained_path()
+    return send_from_directory(untrained_dir, file_path)
 
 
-@app.route('/')
-def index():
-    untrained_dirs = "../../data/untrained"
-    all_files = []
-    # Todo get from repositroy
-    for root, dirs, files in os.walk(untrained_dirs):
-        for file in files:
-            filename = os.path.join(root, file)
-            dirname = os.path.dirname(filename).split("\\")[-1]
-            file_path = dirname + "/" + file
-            all_files.append(file_path)
-    return render_template('index.html', files=all_files)
+@app.route('/untrained')
+def untrained():
+    ##Todo set a Limit
+    untrained_repo = UntrainedRepo()
+    sequences = untrained_repo.get_sequences()
+    captures = {}
+    for sequence in sequences:
+        capture_files = []
+        for image in sequence.get_images():
+            capture_files.append(image.get_file_name())
+        captures[sequence.time] = capture_files
+    return jsonify(captures)
 
 
 @app.route('/video_feed')
