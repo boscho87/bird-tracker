@@ -44,6 +44,7 @@ class MainLoop:
                 # event.subject = match.get_subject() ##Todo implement
                 event.known = True
                 event.save()
+                print("Pause for 5 seconds")
                 time.sleep(5)
                 self.wait_for_input()
                 return True
@@ -53,6 +54,7 @@ class MainLoop:
             self.untrained_repo.store_sequence(sequence)
             event.save()
             print("No match found")
+            print("Pause for 5 seconds")
             time.sleep(5)
             self.wait_for_input()
 

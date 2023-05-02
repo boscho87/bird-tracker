@@ -16,7 +16,6 @@ class TrainedRepo:
         output_files = []
         directory = self.path_manager.get_trained_path()
         subjects = os.listdir(directory)
-        print(subjects)
         for subject in subjects:
             subject_path = os.path.join(directory, subject)
             if os.path.isdir(subject_path):
@@ -27,7 +26,7 @@ class TrainedRepo:
                         image = Image(image_path)
                         output_files.append(image)
         # Todo extract images in groups of subjects
-
+        print("Es gibt " + str(len(output_files)) + " Bilder zu prüfen")
         return output_files
 
     def get_subjects(self):
