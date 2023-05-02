@@ -11,6 +11,7 @@ class Sequence:
         print("Sequence init")
 
     def get_video_path(self):
+        print(self.file_path)
         return self.file_path
 
     def get_time(self):

@@ -14,7 +14,7 @@ class UntrainedRepo:
         self.path_manager = PathManager()
 
     def store_image(self, image: Image, prefix: str):
-        save_path = os.path.join(self.path_manager.create_untrained_path(), prefix)
+        save_path = self.path_manager.create_untrained_path(prefix)
         file_name = prefix + "-" + image.get_file_name()
         target_path = os.path.join(save_path, file_name)
         shutil.copy(image.get_file_path(), target_path)
