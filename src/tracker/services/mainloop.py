@@ -30,7 +30,7 @@ class MainLoop:
         print("MainLoop execute")
         while True:
 
-            if Settings.is_raspberry():
+            if Settings.use_gpio():
                 print("Waiting for GPIO")
                 self.wait_for_gpio()
             else:
@@ -39,8 +39,6 @@ class MainLoop:
                 else:
                     print('Start with tty otherwise you got an infinite loop')
                     exit(100)
-
-
 
             sequence = self.capturer.capture()
             match = self.predictor.predict(sequence)

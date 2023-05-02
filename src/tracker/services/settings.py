@@ -39,6 +39,5 @@ class Settings:
         return os.getenv('DB_FILE_PATH') if os.getenv('DB_FILE_PATH') not in [None, ''] else 'data/db.sqlite'
 
     @staticmethod
-    def is_raspberry():
-        pi_model = platform.machine()
-        return pi_model.startswith('arm') and 'raspberry' in pi_model.lower()
+    def use_gpio():
+        return bool(int(os.getenv('USE_GPIO'))) if os.getenv('USE_GPIO') not in [None, ''] else False
