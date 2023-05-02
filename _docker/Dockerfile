@@ -12,7 +12,12 @@ COPY . /app
 COPY .env.default /app/.env.default
 COPY _docker/start.sh /usr/bin/start.sh
 
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 RUN rm -rf _docker _doc docker-compose.yaml CHANGELOG.md README.md requirements.txt .gitignore .git
 RUN chmod +x /usr/bin/start.sh
+
+RUN apt-get remove -y build-essential \
+        && apt-get autoremove -y \
+        && apt-get clean
+
 CMD ["/usr/bin/start.sh"]

@@ -29,21 +29,9 @@ class MainLoop:
     def execute(self):
         print("MainLoop execute")
         while True:
-
-            if Settings.use_gpio():
-                print("Waiting for GPIO")
-                self.wait_for_gpio()
-            else:
-                if sys.stdin.isatty():
-                    input("Drücke Enter, um fortzufahren...")
-                else:
-                    print('Start with tty otherwise you got an infinite loop')
-                    exit(100)
-
             sequence = self.capturer.capture()
             match = self.predictor.predict(sequence)
             event = Event.create(time=sequence.get_time())
-
             if isinstance(match, Match):
                 save_path = self.path_manager.create_recording_path()
                 match_path = match.get_sequence().get_video_path()
@@ -56,13 +44,28 @@ class MainLoop:
                 # event.subject = match.get_subject() ##Todo implement
                 event.known = True
                 event.save()
+                time.sleep(5)
+                self.wait_for_input()
+                return True
 
-        self.untrained_repo.store_sequence(sequence)
-        # store the data into a db
-        # send notification @given time if there are new events
-        event.save()
-        print("No match found")
-        time.sleep(5)
+            # store the data into a db
+            # send notification @given time if there are new events
+            self.untrained_repo.store_sequence(sequence)
+            event.save()
+            print("No match found")
+            time.sleep(5)
+            self.wait_for_input()
+
+    def wait_for_input(self):
+        if Settings.use_gpio():
+            print("Waiting for GPIO")
+            self.wait_for_gpio()
+        else:
+            if sys.stdin.isatty():
+                input("Drücke Enter, um fortzufahren...")
+            else:
+                print('Start with tty otherwise you got an infinite loop')
+                exit(100)
 
     def wait_for_gpio(self):
         import RPi.GPIO as GPIO
