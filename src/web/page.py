@@ -40,6 +40,9 @@ class Page:
     def __init__(self):
         print("Page init")
 
-    def run(self):
+    def run_dev(self):
         print("Page run")
-        app.run(host='0.0.0.0')
+        app.run(debug=True, host='0.0.0.0')
+
+    def get(self):
+        return app

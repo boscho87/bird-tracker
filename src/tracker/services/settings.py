@@ -41,3 +41,13 @@ class Settings:
     @staticmethod
     def use_gpio():
         return bool(int(os.getenv('USE_GPIO'))) if os.getenv('USE_GPIO') not in [None, ''] else False
+
+    @staticmethod
+    def get_data_group_id():
+        if os.getenv("DATA_GROUP_ID") == None:
+            return 1000
+        return int(os.getenv("DATA_GROUP_ID"))
+
+    @classmethod
+    def get_pause_time(cls):
+        return int(os.getenv('PAUSE_TIME')) if os.getenv('PAUSE_TIME') not in [None, ''] else 5

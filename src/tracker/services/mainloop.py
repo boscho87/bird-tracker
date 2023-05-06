@@ -1,12 +1,10 @@
-import os
-import shutil
+import logging
 import sys
 import time
 
-from src.repository.untrained_repo import UntrainedRepo
 from src.tracker.entity.event import Event
+from src.tracker.entity.subject import Subject
 from src.tracker.services.capturer import Capturer
-from src.tracker.entity.match import Match
 from src.tracker.services.path_manager import PathManager
 from src.tracker.services.predictor import Predictor
 from src.tracker.services.sequencesplitter import SequenceSplitter
@@ -17,41 +15,43 @@ class MainLoop:
     predictor: Predictor
     capturer: Capturer
     sequence_splitter: SequenceSplitter
-    untrained_repo: UntrainedRepo
 
     def __init__(self):
-        self.predictor = Predictor()
         self.capturer = Capturer()
+        self.predictor = Predictor()
         self.sequence_splitter = SequenceSplitter()
         self.path_manager = PathManager()
-        self.untrained_repo = UntrainedRepo()
 
     def execute(self):
-        print("MainLoop execute")
+        logging.debug("MainLoop execute")
         while True:
-            sequence = self.capturer.capture()
-            match = self.predictor.predict(sequence)
-            event = Event.create(time=sequence.get_time())
-            if isinstance(match, Match):
-                save_path = self.path_manager.create_recording_path()
-                match_path = match.get_sequence().get_video_path()
-                output_path = os.path.join(save_path, str(sequence.get_time()) + "-match.mp4")
-                shutil.copy(match_path, output_path)
-                # store the sequence mp4
-                # store event with path to the mp4 in the db
-                # send notification @given time if there are new events
-                print("Match found")
-                # event.subject = match.get_subject() ##Todo implement
-                event.known = True
-                event.save()
-                print("Pause for 5 seconds")
-                time.sleep(5)
-                self.wait_for_input()
+            # Todo FIX ORM, why only ids are returned
+            video = self.capturer.capture()
+            images = self.sequence_splitter.video_to_image_sequence(video)
+            subject = Subject.create(images=images, videos=[video])
+            event = self.predictor.predict(subject)
+
+            if isinstance(event, Event):
+                # Todo save logic into repository
+                logging.info("Match found")
+
+                # save_path = self.path_manager.create_recording_path()
+                # match_path = match.get_sequence().get_video_path()
+                # output_path = os.path.join(save_path, str(video_sequence.get_time()) + "-.mp4")
+                # shutil.copy(match_path, output_path)
+                # logging.info("Match found")
+                ## event.subject = match.get_subject() ##Todo implement
+                # event.known = True
+                # event.save()
+                # logging.debug("Pause for 5 seconds")
+                # time.sleep(Settings.get_pause_time())
+                # self.wait_for_input()
                 return True
 
+            return False
             # store the data into a db
             # send notification @given time if there are new events
-            self.untrained_repo.store_sequence(sequence)
+            self.untrained_repo.store_sequence(video_sequence)
             event.save()
             print("No match found")
             print("Pause for 5 seconds")
