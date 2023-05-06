@@ -1,8 +1,24 @@
 version: '3.5'
 services:
-  app:
+  livebook-webserver-prod:
+    restart: always
+    depends_on:
+      - livebook-app-prod
+    image: 'nginx:alpine'
+    container_name: livebook-webserver-prod
+    working_dir: /app
+    volumes:
+      - './nginx_prod.conf:/etc/nginx/conf.d/default.conf'
+      # zwingend benötigt, damit nginx, die daten "servieren" kann
+      - './data:/application/data'
+    ports:
+      - '4546:80'
+
+  bird-tracker:
     container_name: bird-tracker
     image: 'boscho87/bird-tracker:latest'
+    environment:
+      - DATA_GROUP_ID=1000 #host user GroupId
     ports:
       - '5000:5000'
     volumes:

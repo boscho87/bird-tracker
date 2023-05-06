@@ -1,4 +1,4 @@
-FROM python:3.10-slim
+FROM python:3.10-slim as prod
 
 # Install required packages
 RUN apt-get update && apt-get install -y libgl1-mesa-glx libglib2.0-0 build-essential \
@@ -22,3 +22,9 @@ RUN apt-get remove -y build-essential \
         && rm -rf /root/.cache/pip
 
 CMD ["/usr/bin/start.sh"]
+
+FROM prod as dev
+
+COPY _docker/_dev.sh /usr/bin/start.sh
+RUN chmod +x /usr/bin/start.sh
+

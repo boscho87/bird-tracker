@@ -1,7 +1,8 @@
 import os
 import shutil
 
-from src.functions import create_slug
+from slugify import slugify
+
 from src.tracker.entity.image import Image
 from src.tracker.services.path_manager import PathManager
 
@@ -38,7 +39,7 @@ class TrainedRepo:
         shutil.copy(image.get_file_path(), target_path)
 
     def store_sequence(self, sequence, name):
-        image_path = self.path_manager.get_trained_path(create_slug(name))
+        image_path = self.path_manager.get_trained_path(slugify(name))
         images = sequence.get_images()
         for image in images:
             self.store_image(image, str(sequence.get_time()))

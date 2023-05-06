@@ -35,11 +35,9 @@ class MainLoop:
             if isinstance(match, Match):
                 save_path = self.path_manager.create_recording_path()
                 match_path = match.get_sequence().get_video_path()
-                output_path = os.path.join(save_path, str(sequence.get_time()) + "-match.mp4")
+                output_path = os.path.join(save_path, str(sequence.get_time()) + "-.mp4")
+
                 shutil.copy(match_path, output_path)
-                # store the sequence mp4
-                # store event with path to the mp4 in the db
-                # send notification @given time if there are new events
                 print("Match found")
                 # event.subject = match.get_subject() ##Todo implement
                 event.known = True
