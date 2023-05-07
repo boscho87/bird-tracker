@@ -1,19 +1,16 @@
 import os
 
-from flask import Flask, render_template, send_from_directory, Response, jsonify
+from flask import Flask, Response, jsonify
 
-from src.repository.untrained_repo import UntrainedRepo
 from src.tracker.services.capturer import Capturer
-from src.tracker.services.path_manager import PathManager
 
 app = Flask(__name__)
 
 
 @app.route('/images/<path:file_path>')
 def untrained_images(file_path):
-    path_manager = PathManager()
-    untrained_dir = path_manager.create_untrained_path()
-    return send_from_directory(untrained_dir, file_path)
+    ##Todo set a Limit and implement
+    print("implement")
 
 
 @app.route('/untrained')

@@ -35,9 +35,7 @@ class Capturer:
         out.release()
         cap.release()
         cv2.destroyAllWindows()
-        video = Video()
-        video.filepath = filename
-        return video
+        return Video.create(filepath=filename)
 
     def get_capture(self):
         try:

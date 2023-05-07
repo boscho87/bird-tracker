@@ -7,8 +7,10 @@ from src.tracker.entity.subject import Subject
 
 class Image(BaseModel):
     id = AutoField()
-    filepath = CharField(unique=True, index=True)
+    filepath = CharField(unique=True)
     subject = ForeignKeyField(Subject, backref='images', null=True, default=None)
+
+
 
 
 

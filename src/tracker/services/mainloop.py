@@ -25,36 +25,18 @@ class MainLoop:
     def execute(self):
         logging.debug("MainLoop execute")
         while True:
-            # Todo FIX ORM, why only ids are returned
             video = self.capturer.capture()
             images = self.sequence_splitter.video_to_image_sequence(video)
-            subject = Subject.create(images=images, videos=[video])
+            subject = Subject.create(images=images, videos=[video], trained=False)
             event = self.predictor.predict(subject)
-
+            print("event: " + str(event))
+            print("Todo remove close")
+            exit(0)
             if isinstance(event, Event):
-                # Todo save logic into repository
                 logging.info("Match found")
+                logging.debug("Event: " + str(event.subject.slug))
+                continue
 
-                # save_path = self.path_manager.create_recording_path()
-                # match_path = match.get_sequence().get_video_path()
-                # output_path = os.path.join(save_path, str(video_sequence.get_time()) + "-.mp4")
-                # shutil.copy(match_path, output_path)
-                # logging.info("Match found")
-                ## event.subject = match.get_subject() ##Todo implement
-                # event.known = True
-                # event.save()
-                # logging.debug("Pause for 5 seconds")
-                # time.sleep(Settings.get_pause_time())
-                # self.wait_for_input()
-                return True
-
-            return False
-            # store the data into a db
-            # send notification @given time if there are new events
-            self.untrained_repo.store_sequence(video_sequence)
-            event.save()
-            print("No match found")
-            print("Pause for 5 seconds")
             time.sleep(5)
             self.wait_for_input()
 
@@ -67,7 +49,6 @@ class MainLoop:
                 input("Drücke Enter, um fortzufahren...")
             else:
                 print('Start with tty otherwise you got an infinite loop')
-                exit(100)
 
     def wait_for_gpio(self):
         import RPi.GPIO as GPIO

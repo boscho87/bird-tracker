@@ -11,7 +11,7 @@ class Subject(BaseModel):
     highest_mean_square_error = FloatField(null=True, default=None)
 
     def get_images(self):
-        return self.images
+        return list(self.images)
 
     def get_videos(self):
-        return self.videos
+        return list(self.videos)

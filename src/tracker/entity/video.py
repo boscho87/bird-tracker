@@ -6,5 +6,5 @@ from src.tracker.entity.subject import Subject
 
 class Video(BaseModel):
     id = AutoField()
-    filepath = CharField(unique=True, index=True)
-    videos = ForeignKeyField(Subject, backref='videos', null=True, default=None)
+    filepath = CharField(unique=True)
+    subject = ForeignKeyField(Subject, backref='videos', null=True, default=None)
