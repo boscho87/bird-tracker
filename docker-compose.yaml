@@ -15,16 +15,16 @@ services:
     devices:
       - /dev/video0:/dev/video0
 
-  bird-tracker-webserver:
+  bird-tracker-web:
     depends_on:
-      - bird-tracker-webserver
+      - bird-tracker-dev
     image: 'nginx:alpine'
-    container_name: livebook-webserver-prod
+    container_name: bird-tracker-web
     working_dir: /app
     volumes:
       - './_docker/nginx.conf:/etc/nginx/conf.d/default.conf'
     ports:
-      - '4546:80'
+      - '4547:80'
 
 networks:
   default:

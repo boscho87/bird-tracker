@@ -1,10 +1,6 @@
-from .repository.trained_repo import TrainedRepo
-from .repository.untrained_repo import UntrainedRepo
 from .tracker.entity.base_model import BaseModel
 from .tracker.entity.event import Event
 from .tracker.entity.image import Image
-from .tracker.entity.match import Match
-from .tracker.entity.sequence import Sequence
 from src.tracker.services.sequencesplitter import SequenceSplitter
 from .tracker.entity.subject import Subject
 from .tracker.services.capturer import Capturer
@@ -17,13 +13,9 @@ __all__ = [
     "Capturer",
     "MainLoop",
     "Predictor",
-    "Sequence",
-    "Match",
     "PathManager",
     "SequenceSplitter",
     "Settings",
-    "TrainedRepo",
-    "UntrainedRepo",
     "Image",
     "BaseModel",
     "Event",

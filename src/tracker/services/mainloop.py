@@ -1,12 +1,10 @@
-import os
-import shutil
+import logging
 import sys
 import time
 
-from src.repository.untrained_repo import UntrainedRepo
 from src.tracker.entity.event import Event
+from src.tracker.entity.subject import Subject
 from src.tracker.services.capturer import Capturer
-from src.tracker.entity.match import Match
 from src.tracker.services.path_manager import PathManager
 from src.tracker.services.predictor import Predictor
 from src.tracker.services.sequencesplitter import SequenceSplitter
@@ -17,42 +15,28 @@ class MainLoop:
     predictor: Predictor
     capturer: Capturer
     sequence_splitter: SequenceSplitter
-    untrained_repo: UntrainedRepo
 
     def __init__(self):
-        self.predictor = Predictor()
         self.capturer = Capturer()
+        self.predictor = Predictor()
         self.sequence_splitter = SequenceSplitter()
         self.path_manager = PathManager()
-        self.untrained_repo = UntrainedRepo()
 
     def execute(self):
-        print("MainLoop execute")
+        logging.debug("MainLoop execute")
         while True:
-            sequence = self.capturer.capture()
-            match = self.predictor.predict(sequence)
-            event = Event.create(time=sequence.get_time())
-            if isinstance(match, Match):
-                save_path = self.path_manager.create_recording_path()
-                match_path = match.get_sequence().get_video_path()
-                output_path = os.path.join(save_path, str(sequence.get_time()) + "-.mp4")
+            video = self.capturer.capture()
+            images = self.sequence_splitter.video_to_image_sequence(video)
+            subject = Subject.create(images=images, videos=[video], trained=False)
+            event = self.predictor.predict(subject)
+            print("event: " + str(event))
+            print("Todo remove close")
+            exit(0)
+            if isinstance(event, Event):
+                logging.info("Match found")
+                logging.debug("Event: " + str(event.subject.slug))
+                continue
 
-                shutil.copy(match_path, output_path)
-                print("Match found")
-                # event.subject = match.get_subject() ##Todo implement
-                event.known = True
-                event.save()
-                print("Pause for 5 seconds")
-                time.sleep(5)
-                self.wait_for_input()
-                return True
-
-            # store the data into a db
-            # send notification @given time if there are new events
-            self.untrained_repo.store_sequence(sequence)
-            event.save()
-            print("No match found")
-            print("Pause for 5 seconds")
             time.sleep(5)
             self.wait_for_input()
 
@@ -65,7 +49,6 @@ class MainLoop:
                 input("Drücke Enter, um fortzufahren...")
             else:
                 print('Start with tty otherwise you got an infinite loop')
-                exit(100)
 
     def wait_for_gpio(self):
         import RPi.GPIO as GPIO

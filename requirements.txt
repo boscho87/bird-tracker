@@ -4,3 +4,4 @@ python-dotenv~=0.21.1
 peewee~=3.16.2
 python-slugify~=5.0.2
 RPi.GPIO~=0.7.0
+psycopg2-binary~=2.9.6

@@ -1,35 +1,34 @@
-from typing import Union, List
+import logging
+from typing import List
+
+from src.tracker.entity.image import Image
 from src.tracker.entity.subject import Subject
+from src.tracker.entity.video import Video
+from src.tracker.services.path_manager import PathManager
 
 
 class SubjectRepository:
+    def __init__(self):
+        self.path_manager = PathManager()
 
-    def create(self, subject: Subject) -> Subject:
-        subject.save()
-        return subject
-
-    def get_by_id(self, subject_id: int) -> Subject:
-        return Subject.get_or_none(id=subject_id)
-
-    def get_all(self) -> List[Subject]:
-        return Subject.select()
-
-    def update(self, subject: Subject) -> Subject:
-        if subject.id:
-            subject.save()
-            return subject
-        return None
-
-    def delete(self, subject: Subject) -> bool:
-        if subject.id:
-            subject.delete_instance()
-            return True
-        return False
-
-    def create_or_update(self, subject: Subject) -> Union[Subject, None]:
-        existing_subject = self.get_by_id(subject.id)
-        if existing_subject:
-            subject.id = existing_subject.id
-            return self.update(subject)
+    def create_or_update(self, subject: Subject):
+        if subject.trained:
+            for video in subject.get_videos():
+                print(f'old_filepath trained: {video.filepath}')
+                new_filepath = self.path_manager.move_video_to_trained(video, subject.slug)
+                print(f'new_filepath trained: {new_filepath}')
+                Video(id=video.id, filepath=new_filepath, subject=subject).save()
+            for image in subject.get_images():
+                print(f'old_filepath trained: {image.filepath}')
+                new_filepath = self.path_manager.move_image_to_trained(image, subject.slug)
+                print(f'new_filepath trained: {new_filepath}')
+                Image(id=image.id, filepath=new_filepath, subject=subject).save()
         else:
-            return self.create(subject)
+            for video in subject.get_videos():
+                new_filepath = self.path_manager.move_video_to_untrained(video, subject.slug)
+                Video(id=video.id, filepath=new_filepath, subject=subject.id).save()
+            for image in subject.get_images():
+                new_filepath = self.path_manager.move_image_to_untrained(image, subject.slug)
+                Image(id=image.id, filepath=new_filepath, subject=subject.id).save()
+        print("Saving subject")
+        subject.save()
