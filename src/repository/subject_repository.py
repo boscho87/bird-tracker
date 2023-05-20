@@ -30,5 +30,9 @@ class SubjectRepository:
             for image in subject.get_images():
                 new_filepath = self.path_manager.move_image_to_untrained(image, subject.slug)
                 Image(id=image.id, filepath=new_filepath, subject=subject.id).save()
-        print("Saving subject")
+        print(f'Saving subject: {subject.name}')
+        logging.debug(f'Saving subject: {subject.name}')
         subject.save()
+
+    def get_untrained(self, page, items_per_page=50):
+        return Subject.select().where(Subject.trained == False).paginate(page, items_per_page)

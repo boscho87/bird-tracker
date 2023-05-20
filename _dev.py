@@ -3,7 +3,7 @@ from src.web.page import Page
 
 def main():
     page = Page()
-    page.run()
+    page.run_dev()
 
 
 if __name__ == "__main__":

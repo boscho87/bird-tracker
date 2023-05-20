@@ -1,7 +1,8 @@
-import os
+import logging
 
 from flask import Flask, Response, jsonify
 
+from src.repository.subject_repository import SubjectRepository
 from src.tracker.services.capturer import Capturer
 
 app = Flask(__name__)
@@ -16,15 +17,14 @@ def untrained_images(file_path):
 @app.route('/untrained')
 def untrained():
     ##Todo set a Limit
-    untrained_repo = UntrainedRepo()
-    sequences = untrained_repo.get_sequences()
-    captures = {}
-    for sequence in sequences:
-        capture_files = []
-        for image in sequence.get_images():
-            capture_files.append(image.get_file_name())
-        captures[sequence.time] = capture_files
+    subject_repository = SubjectRepository()
+    captures = []
+    for subject in subject_repository.get_untrained(1, 50):
+        for image in subject.get_images():
+            captures = image.filepath
+
     return jsonify(captures)
+
 
 
 @app.route('/video-feed')
@@ -35,10 +35,10 @@ def video_feed():
 
 class Page:
     def __init__(self):
-        print("Page init")
+        logging.debug("Page init")
 
     def run_dev(self):
-        print("Page run")
+        logging.debug("Page run_dev")
         app.run(debug=True, host='0.0.0.0')
 
     def get(self):

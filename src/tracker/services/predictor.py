@@ -17,7 +17,7 @@ class Predictor:
         self.subject_repo = SubjectRepository()
 
     def predict(self, current_subject: Subject):
-
+        #Note, to improve we could stor the image_array in the database, so we don't have to read it from the file
         logging.info("Predictor predict")
         subject_images = list(current_subject.images)
         current_images = self.get_x_current_images(list(subject_images), 3)
@@ -29,7 +29,7 @@ class Predictor:
                 trained_image_array = cv2.imread(trained_image.filepath)
                 for current_image in current_images:
                     current_image_array = cv2.imread(current_image.filepath)
-                    mean_squared_error = np.mean((trained_image_array - current_image_array) ** 2)
+                    mean_squared_error = self.numphy_mean(current_image_array, trained_image_array)
                     logging.debug("mean_squared_error: " + str(mean_squared_error))
                     if mean_squared_error > subject_mean_squared_error:
                         subject_mean_squared_error = mean_squared_error
@@ -46,7 +46,7 @@ class Predictor:
                 trained_image_array = cv2.imread(trained_image.filepath)
             for current_image in current_images:
                 current_image_array = cv2.imread(current_image.filepath)
-                mean_squared_error = np.mean((trained_image_array - current_image_array) ** 2)
+                mean_squared_error = self.numphy_mean(current_image_array, trained_image_array)
                 if mean_squared_error > highest_mean_squared_error:
                     highest_mean_squared_error = mean_squared_error
                 logging.debug("mean_squared_error: " + str(mean_squared_error))
@@ -59,6 +59,13 @@ class Predictor:
         Event(subject=current_subject, known=False).save()
 
         return None
+
+    def numphy_mean(self, current_image_array, trained_image_array):
+        try:
+            return np.mean((trained_image_array - current_image_array) ** 2)
+        except Exception as e:
+            logging.error(e)
+            return 0
 
     def create_event(self, mean_squared_error, existing_subject, current_subject):
         existing_subject.highest_mean_square_error = mean_squared_error

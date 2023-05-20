@@ -13,6 +13,7 @@ from src.tracker.services.settings import Settings
 class PathManager:
     def __init__(self):
         logging.debug("PathManager init")
+        self.settings = Settings()
         self.project_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../"))
 
     def create_video_temp_path(self):
@@ -102,4 +103,17 @@ class PathManager:
         os.rmdir(path)
 
     def create_data_dir(self):
-        return self.mkdir(os.path.abspath(os.path.join(self.project_path, 'data')))
+         self.mkdir(os.path.abspath(os.path.join(self.project_path, 'data')))
+         return os.path.abspath(os.path.join(self.project_path, 'data'))
+
+    def change_subfolder_ownership(self):
+        data_dir = self.create_data_dir()
+        gid = self.settings.get_data_group_id()
+        os.chmod(data_dir, 0o775)
+        os.chown(data_dir, -1, gid)
+        print(f"Changing ownership of {data_dir} to group {gid}")
+        for root, dirs, files in os.walk(data_dir):
+            for dir in dirs:
+                dir_path = os.path.join(root, dir)
+                os.chmod(dir_path, 0o775)
+                os.chown(dir_path, -1, gid)
